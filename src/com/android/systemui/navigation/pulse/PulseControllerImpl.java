@@ -113,6 +113,8 @@ public class PulseControllerImpl
     private boolean mDozing;
     private boolean mKeyguardGoingAway;
 
+    private boolean mRenderLoadedOnce;
+
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -298,7 +300,7 @@ public class PulseControllerImpl
         mSettingsObserver = new SettingsObserver(mainHandler);
         mSettingsObserver.register();
         mSettingsObserver.updateSettings();
-        loadRenderer();
+        //loadRenderer();
     }
 
     @Override
@@ -531,6 +533,10 @@ public class PulseControllerImpl
                 setVisualizerLocked(true);
                 mStreamHandler.link();
                 mLinked = true;
+                if (!mRenderLoadedOnce) {
+                    mRenderLoadedOnce = true;
+                    loadRenderer();
+                }
                 if (mRenderer != null) {
                     mRenderer.onVisualizerLinkChanged(true);
                     getNavigationBarView().hideHomeHandle(true);
