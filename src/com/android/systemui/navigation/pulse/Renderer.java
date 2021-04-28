@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2016 The DirtyUnicorns Project
  * Copyright (C) 2016 crDroid Android Project
  *
@@ -35,9 +35,7 @@ public abstract class Renderer implements VisualizerStreamHandler.Listener {
 
     private static final long ANIM_FPS_MAX = 40;
     private static final long ANIM_FPS_TO_MILLIS = 1000 / ANIM_FPS_MAX;
-    private long mCurrentTime;
     private long mRenderCounter;
-    private long mCurrentCounter;
 
     protected boolean mKeyguardShowing;
 
@@ -50,8 +48,8 @@ public abstract class Renderer implements VisualizerStreamHandler.Listener {
     }
 
     protected final void postInvalidate() {
-        mCurrentTime = System.currentTimeMillis();
-        mCurrentCounter = mCurrentTime - mRenderCounter;
+        long mCurrentTime = System.currentTimeMillis();
+        long mCurrentCounter = mCurrentTime - mRenderCounter;
         if (mCurrentCounter >= ANIM_FPS_TO_MILLIS) {
             mRenderCounter = mCurrentTime;
             mView.postInvalidate();
